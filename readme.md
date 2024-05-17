@@ -2,7 +2,7 @@
 
 Yui is a modern, elegant, and mini PHP framework inspired by Laravel. Developed to streamline the process of building high-quality web applications, Yui offers a flexible and intuitive framework for developers.
 
-<p align="center"><img src="https://avatars.githubusercontent.com/u/170112624?s=200&v=4"></p>
+<p align="center"><img src="https://lh3.googleusercontent.com/d/1PxkJ-uj-MPTr78S22g9bXwxXr41hN0lG=w1000"></p>
 
 **PLEASE READ THE ROADMAP**
 
