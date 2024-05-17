@@ -8,6 +8,13 @@
   "version": "0.0.1",
   "type": "library",
   "license": "MIT",
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/yuiphp/core"
+    }
+  ],
   "authors": [
     {
       "name": "andrefelipe18",
