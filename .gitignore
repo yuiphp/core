@@ -1,0 +1,9 @@
+/phpunit.xml/
+/.idea
+/.fleet
+/.vscode
+/vendor/
+composer.lock
+*.sqlite
+.phpunit.result.cache
+.php-cs-fixer.cache

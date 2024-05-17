@@ -1,0 +1,44 @@
+{
+  "name": "yuiphp/core",
+  "description": "Core of Yui Framework",
+  "keywords": [
+    "framework",
+    "yui"
+  ],
+  "version": "0.0.1",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "andrefelipe18",
+      "email": "dominguesstroppa@gmail.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/yuiphp/core/issues",
+    "source": "https://github.com/yuiphp/core"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yui\\": "src"
+    },
+    "files": []
+  },
+  "require-dev": {
+    "pestphp/pest": "^2.34",
+    "pestphp/pest-plugin-drift": "^2.6",
+    "friendsofphp/php-cs-fixer": "^3.54",
+    "phpstan/phpstan": "^1.10",
+    "mockery/mockery": "^1.6",
+    "pestphp/pest-plugin-type-coverage": "^2.8"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "require": {
+    "fakerphp/faker": "^1.23",
+    "vlucas/phpdotenv": "^5.6"
+  }
+}
