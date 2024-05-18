@@ -4,6 +4,8 @@ Yui was born as a way to keep motivated to study PHP outside of laravel, since 2
 
 This mini framework made from the heart has helped me understand how Laravel processes work behind the scenes.
 
+- [x] Support PHP-DI: Implement a dependency injection container.
+- [x] Database Support: MySQL, PostgreSQL, SQLite
 - [ ] Drizzle Like ORM: Implement a Drizzle-like ORM to interact with the database.
 - [ ] CLI Support: Interact with your application through a robust Command Line Interface (CLI).
 - [ ] Logging: Implement a logging system to help you debug your application.

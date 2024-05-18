@@ -6,7 +6,7 @@ namespace Yui\Database\Connection\Drivers;
 
 use PDO;
 
-class MysqlDriver extends DatabaseDriver
+class MysqlDriver extends AbstractDatabaseDriver
 {
     public function connect(): PDO
     {

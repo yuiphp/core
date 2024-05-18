@@ -127,7 +127,7 @@ class Application implements ApplicationContract
     public function buildContainer(): void
     {
         $containerBuilder = new ContainerBuilder();
-        $containerBuilder->addDefinitions(__DIR__ . './Container/definitions.php');
+        $containerBuilder->addDefinitions(__DIR__ . '/Container/definitions.php');
         $this->container = $containerBuilder->build();
     }
 

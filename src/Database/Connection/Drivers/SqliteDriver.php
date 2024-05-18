@@ -7,7 +7,7 @@ namespace Yui\Database\Connection\Drivers;
 use PDO;
 use Exception;
 
-class SqliteDriver extends DatabaseDriver
+class SqliteDriver extends AbstractDatabaseDriver
 {
     public function connect(): PDO
     {

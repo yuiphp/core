@@ -6,7 +6,7 @@ namespace Yui\Database\Connection\Drivers;
 
 use PDO;
 
-class PgsqlDriver extends DatabaseDriver
+class PgsqlDriver extends AbstractDatabaseDriver
 {
     public function connect(): PDO
     {

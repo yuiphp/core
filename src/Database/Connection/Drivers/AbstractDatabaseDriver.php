@@ -8,7 +8,7 @@ use Exception;
 use PDO;
 use Yui\Contracts\Database\Driver\DriverContract;
 
-abstract class DatabaseDriver implements DriverContract
+abstract class AbstractDatabaseDriver implements DriverContract
 {
     protected function createPDO(string $dsn, ?string $username = null, ?string $password = null): PDO
     {
