@@ -6,7 +6,7 @@ namespace Yui\Bootstrap;
 
 use Dotenv\Dotenv;
 use Yui\Contracts\Application;
-use Yui\Contracts\Bootstrap\Bootstrap as BootstrapContract;
+use Yui\Contracts\Bootstrap\BootstrapContract;
 
 class LoadEnvironmentVariables implements BootstrapContract
 {

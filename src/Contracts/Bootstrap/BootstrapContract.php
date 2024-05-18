@@ -6,7 +6,7 @@ namespace Yui\Contracts\Bootstrap;
 
 use Yui\Contracts\Application;
 
-interface Bootstrap
+interface BootstrapContract
 {
     public function bootstrap(Application $app): void;
 }

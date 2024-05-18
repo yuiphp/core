@@ -113,12 +113,12 @@ class Application implements ApplicationContract
      *
      * @var \DI\Container
      */
-    protected $container;
+    protected \DI\Container $container;
 
     /**
      * The bootstrap classes for the application.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected array $bootstrappers = [
         LoadEnvironmentVariables::class,
@@ -170,7 +170,7 @@ class Application implements ApplicationContract
     protected function boot(): void
     {
         foreach ($this->bootstrappers as $bootstrapper) {
-            /** @var \Yui\Contracts\Bootstrap\Bootstrap $bootstrapper */
+            /** @var \Yui\Contracts\Bootstrap\BootstrapContract $bootstrapper */
             $bootstrapper = new $bootstrapper();
             $bootstrapper->bootstrap($this);
         }
