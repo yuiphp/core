@@ -97,13 +97,7 @@ interface Application
      * @return self
      */
     public function with(
-        ?string $basePath = null,
-        ?string $bootstrapPath = null,
-        ?string $databasePath = null,
-        ?string $publicPath = null,
-        ?string $resourcePath = null,
-        ?string $storagePath = null,
-        ?string $routesPath = null,
+        string $basePath,
     ): self;
 
     /**

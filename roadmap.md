@@ -7,8 +7,8 @@ This mini framework made from the heart has helped me understand how Laravel pro
 - [x] Support PHP-DI: Implement a dependency injection container.
 - [x] Database Support: MySQL, PostgreSQL, SQLite
 - [ ] Drizzle Like ORM: Implement a Drizzle-like ORM to interact with the database.
-- [ ] CLI Support: Interact with your application through a robust Command Line Interface (CLI).
 - [ ] Logging: Implement a logging system to help you debug your application.
+- [ ] CLI Support: Interact with your application through a robust Command Line Interface (CLI).
 - [ ] FrankenPHP: Support the FrankenPHP.
 - [ ] File Routing: Implement a file-based routing system.
 - [ ] Middleware: Implement middleware to filter and modify HTTP requests entering your application.
@@ -23,3 +23,8 @@ This mini framework made from the heart has helped me understand how Laravel pro
 - [ ] Queue(Only Redis): Implement a queue system.
 - [ ] Events: Implement an event system (Laravel like).
 - [ ] WebSockets (With FrankenPHP): Implement a WebSocket system.
+
+
+## Possible features
+- [ ] Script "What i need docs" that will check what is missing in the documentation based on the source code.
+- [ ] Script "What i need tests" that will check what is missing in the tests based on the source code.

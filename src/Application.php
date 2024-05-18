@@ -137,24 +137,15 @@ class Application implements ApplicationContract
     }
 
     public function with(
-        ?string $basePath = null,
-        ?string $bootstrapPath = null,
-        ?string $databasePath = null,
-        ?string $publicPath = null,
-        ?string $resourcePath = null,
-        ?string $storagePath = null,
-        ?string $routesPath = null
+        string $basePath,
     ): self {
-        if($basePath === null || $bootstrapPath === null || $databasePath === null || $publicPath === null || $resourcePath === null || $storagePath === null || $routesPath === null) {
-            throw new \InvalidArgumentException('All paths must be provided');
-        }
         $this->basePath = $basePath;
-        $this->bootstrapPath = $bootstrapPath;
-        $this->databasePath = $databasePath;
-        $this->publicPath = $publicPath;
-        $this->resourcePath = $resourcePath;
-        $this->storagePath = $storagePath;
-        $this->routesPath = $routesPath;
+        $this->bootstrapPath = $basePath . '/bootstrap';
+        $this->databasePath = $basePath . '/app/Database';
+        $this->publicPath = $basePath . '/public';
+        $this->resourcePath = $basePath . '/resources';
+        $this->storagePath = $basePath . '/storage';
+        $this->routesPath = $basePath . '/routes';
 
         return $this;
     }
