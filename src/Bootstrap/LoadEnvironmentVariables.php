@@ -6,19 +6,20 @@ namespace Yui\Bootstrap;
 
 use Dotenv\Dotenv;
 use Yui\Contracts\Application;
+use Yui\Contracts\Bootstrap\Bootstrap as BootstrapContract;
 
-class LoadEnvironmentVariables
+class LoadEnvironmentVariables implements BootstrapContract
 {
-	/**
-	 * Bootstrap the given application.
-	 * 
-	 * @param \Yui\Contracts\Application  $app
-	 * 
-	 * @return void
-	 */
-	public function bootstrap(Application $app)
-	{
-		$dotenv = Dotenv::createImmutable($app->basePath());
-		$dotenv->load();
-	}
+    /**
+     * Bootstrap the given application.
+     *
+     * @param \Yui\Contracts\Application  $app
+     *
+     * @return void
+     */
+    public function bootstrap(Application $app): void
+    {
+        $dotenv = Dotenv::createImmutable($app->basePath());
+        $dotenv->load();
+    }
 }
