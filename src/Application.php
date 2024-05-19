@@ -6,6 +6,12 @@ use DI\ContainerBuilder;
 use Yui\Bootstrap\LoadEnvironmentVariables;
 use Yui\Contracts\Application as ApplicationContract;
 
+/**
+ * Class Application
+ *
+ * @package Yui
+ * @author andrefelipe18
+ */
 class Application implements ApplicationContract
 {
     /**
@@ -124,6 +130,7 @@ class Application implements ApplicationContract
         LoadEnvironmentVariables::class,
     ];
 
+
     public function buildContainer(): void
     {
         $containerBuilder = new ContainerBuilder();
@@ -145,7 +152,7 @@ class Application implements ApplicationContract
         $this->publicPath = $basePath . '/public';
         $this->resourcePath = $basePath . '/resources';
         $this->storagePath = $basePath . '/storage';
-        $this->routesPath = $basePath . '/routes';
+        $this->routesPath = $basePath . '/app/Routes';
 
         return $this;
     }

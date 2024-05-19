@@ -8,10 +8,16 @@ use Dotenv\Dotenv;
 use Yui\Contracts\Application;
 use Yui\Contracts\Bootstrap\BootstrapContract;
 
+/**
+ * Class LoadEnvironmentVariables
+ *
+ * @author andrefelipe18
+ * @package Yui\Bootstrap
+ */
 class LoadEnvironmentVariables implements BootstrapContract
 {
     /**
-     * Bootstrap the given application.
+     * Create a new EnvironmentVariables instance.
      *
      * @param \Yui\Contracts\Application  $app
      *

@@ -1,16 +1,15 @@
 <?php
 
 use Yui\Application;
-use Yui\Bootstrap\LoadEnvironmentVariables;
 
 it('configures the application correctly', function () {
 	$basePath = '/base/path';
 	$bootstrapPath = '/base/path/bootstrap';
-	$databasePath = '/base/path/database';
+	$databasePath = '/base/path/app/Database';
 	$publicPath = '/base/path/public';
 	$resourcePath = '/base/path/resources';
 	$storagePath = '/base/path/storage';
-	$routesPath = '/base/path/routes';
+	$routesPath = '/base/path/app/Routes';
 
 	$app = Application::configure()->with(
 		$basePath,

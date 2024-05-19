@@ -9,6 +9,7 @@ This mini framework made from the heart has helped me understand how Laravel pro
 - [ ] Drizzle Like ORM: Implement a Drizzle-like ORM to interact with the database.
 - [ ] Logging: Implement a logging system to help you debug your application.
 - [ ] CLI Support: Interact with your application through a robust Command Line Interface (CLI).
+- [ ] Helpers: Array, String, Number
 - [ ] FrankenPHP: Support the FrankenPHP.
 - [ ] File Routing: Implement a file-based routing system.
 - [ ] Middleware: Implement middleware to filter and modify HTTP requests entering your application.

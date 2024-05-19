@@ -86,13 +86,7 @@ interface Application
     /**
      * Set the paths for the application.
      *
-     * @param string|null $basePath
-     * @param string|null $bootstrapPath
-     * @param string|null $databasePath
-     * @param string|null $publicPath
-     * @param string|null $resourcePath
-     * @param string|null $storagePath
-     * @param string|null $routesPath
+     * @param string $basePath
      *
      * @return self
      */

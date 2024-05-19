@@ -5,9 +5,21 @@ declare(strict_types=1);
 namespace Yui\Database\Connection\Drivers;
 
 use PDO;
+use Yui\Contracts\Database\Driver\DriverContract;
 
-class PgsqlDriver extends AbstractDatabaseDriver
+/**
+ * Class PgsqlDriver
+ *
+ * @author andrefelipe18
+ * @package Yui\Database\Connection\Drivers
+ */
+class PgsqlDriver extends AbstractDatabaseDriver implements DriverContract
 {
+    /**
+     * Connect to the PostgreSQL database.
+     *
+     * @return PDO
+     */
     public function connect(): PDO
     {
         $host = $this->getEnv('DB_HOST');

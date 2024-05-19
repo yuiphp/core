@@ -8,8 +8,23 @@ use Exception;
 use PDO;
 use Yui\Contracts\Database\Driver\DriverContract;
 
+/**
+ * Class AbstractDatabaseDriver
+ *
+ * @author andrefelipe18
+ * @package Yui\Database\Connection\Drivers
+ */
 abstract class AbstractDatabaseDriver implements DriverContract
 {
+    /**
+     * Create a new PDO instance.
+     *
+     * @param string $dsn
+     * @param string|null $username
+     * @param string|null $password
+     * @return PDO
+     * @throws Exception
+     */
     protected function createPDO(string $dsn, ?string $username = null, ?string $password = null): PDO
     {
         try {
@@ -23,6 +38,13 @@ abstract class AbstractDatabaseDriver implements DriverContract
         }
     }
 
+    /**
+     * Get the environment variable.
+     *
+     * @param string $key
+     * @return string
+     * @throws Exception
+     */
     protected function getEnv(string $key): string
     {
         $value = $_ENV[$key] ?? null;
