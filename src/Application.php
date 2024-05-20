@@ -14,6 +14,8 @@ use Yui\Contracts\Application as ApplicationContract;
  */
 class Application implements ApplicationContract
 {
+    public static ?Application $app = null;
+
     /**
      * The Yui framework version.
      *
@@ -119,7 +121,7 @@ class Application implements ApplicationContract
      *
      * @var \DI\Container
      */
-    protected \DI\Container $container;
+    public \DI\Container $container;
 
     /**
      * The bootstrap classes for the application.
@@ -134,7 +136,7 @@ class Application implements ApplicationContract
     public function buildContainer(): void
     {
         $containerBuilder = new ContainerBuilder();
-        $containerBuilder->addDefinitions(__DIR__ . '/Container/definitions.php');
+        $containerBuilder->addDefinitions(__DIR__ . '/Container/DatabaseDefinitions.php');
         $this->container = $containerBuilder->build();
     }
 
@@ -147,6 +149,7 @@ class Application implements ApplicationContract
         string $basePath,
     ): self {
         $this->basePath = $basePath;
+        echo $basePath;
         $this->bootstrapPath = $basePath . '/bootstrap';
         $this->databasePath = $basePath . '/app/Database';
         $this->publicPath = $basePath . '/public';
@@ -162,7 +165,18 @@ class Application implements ApplicationContract
         $this->buildContainer();
         $this->boot();
 
+        self::$app = $this;
+
         return $this;
+    }
+
+    public static function getInstance(): self
+    {
+        if(self::$app === null) {
+            throw new \Exception('Application not created');
+        } else {
+            return self::$app;
+        }
     }
 
     protected function boot(): void

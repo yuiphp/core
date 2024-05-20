@@ -15,40 +15,23 @@ use Yui\Database\Connection\Drivers\SqliteDriver;
  * Class Connection
  *
  * @author andrefelipe18
- * @package Yui\Database\Connection
+ * @package Yui\Database\DatabaseConnection
  */
-class Connection
+class DatabaseConnection
 {
     /**
-     * @var PDO|null
+     * @var DriverContract
      */
-    private static ?PDO $pdo = null;
+    protected $driver;
 
     /**
      * Connect to the database and return the PDO instance.
      *
      * @return PDO
      */
-    public static function connect(): PDO
+    public function connect(): PDO
     {
-
-        if (self::$pdo !== null) {
-            return self::$pdo;
-        }
-
-        self::$pdo = self::getDriver()->connect();
-
-        return self::$pdo;
-    }
-
-    /**
-     * Close the connection to the database.
-     *
-     * @return void
-     */
-    public function close(): void
-    {
-        self::$pdo = null;
+        return $this->getDriver()->connect();
     }
 
     /**
@@ -56,8 +39,12 @@ class Connection
      *
      * @return DriverContract
      */
-    protected static function getDriver(): DriverContract
+    protected function getDriver(): DriverContract
     {
+        if ($this->driver) {
+            return $this->driver;
+        }
+        
         $driver = $_ENV['DB_CONNECTION'];
 
         switch ($driver) {
@@ -70,5 +57,15 @@ class Connection
             default:
                 throw new Exception('Invalid database driver');
         }
+    }
+
+    /**
+     * Set driver instance if needed.
+     * 
+     * @param DriverContract $driver
+     */
+    public function setDriver(DriverContract $driver): void
+    {
+        $this->driver = $driver;
     }
 }
