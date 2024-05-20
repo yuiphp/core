@@ -29,7 +29,11 @@
     "psr-4": {
       "Yui\\": "src"
     },
-    "files": []
+    "files": [
+      "src/ORM/db.php",
+      "src/ORM/sql.php",
+      "src/ORM/operators.php"
+    ]
   },
   "require-dev": {
     "pestphp/pest": "^2.34",
