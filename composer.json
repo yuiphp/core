@@ -32,7 +32,7 @@
     "files": [
       "src/ORM/db.php",
       "src/ORM/sql.php",
-      "src/ORM/operators.php"
+      "src/ORM/Operators/Operators.php"
     ]
   },
   "require-dev": {
@@ -54,6 +54,7 @@
   "require": {
     "fakerphp/faker": "^1.23",
     "vlucas/phpdotenv": "^5.6",
-    "php-di/php-di": "^7.0.6"
+    "php-di/php-di": "^7.0.6",
+    "ext-pdo": "*"
   }
 }

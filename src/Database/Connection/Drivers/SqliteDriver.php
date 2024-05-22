@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yui\Database\Connection\Drivers;
 
-use PDO;
 use Exception;
+use PDO;
 use Yui\Contracts\Database\Driver\DriverContract;
 
 /**

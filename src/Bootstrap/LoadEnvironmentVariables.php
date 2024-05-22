@@ -19,7 +19,7 @@ class LoadEnvironmentVariables implements BootstrapContract
     /**
      * Create a new EnvironmentVariables instance.
      *
-     * @param \Yui\Contracts\Application  $app
+     * @param \Yui\Contracts\Application $app
      *
      * @return void
      */

@@ -1,7 +1,7 @@
 <?php
 
-use Yui\Database\DB;
 use Yui\Database\Connection\DatabaseConnection;
+use Yui\Database\DB;
 
 beforeEach(function () {
     $this->pdoMock = Mockery::mock(PDO::class);

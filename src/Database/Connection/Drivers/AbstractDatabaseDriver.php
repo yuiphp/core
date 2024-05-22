@@ -33,7 +33,7 @@ abstract class AbstractDatabaseDriver implements DriverContract
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
             return $pdo;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception("Error connecting to database: {$e->getMessage()}");
         }
     }

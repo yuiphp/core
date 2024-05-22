@@ -44,7 +44,7 @@ class DatabaseConnection
         if ($this->driver) {
             return $this->driver;
         }
-        
+
         $driver = $_ENV['DB_CONNECTION'];
 
         switch ($driver) {
@@ -61,7 +61,7 @@ class DatabaseConnection
 
     /**
      * Set driver instance if needed.
-     * 
+     *
      * @param DriverContract $driver
      */
     public function setDriver(DriverContract $driver): void

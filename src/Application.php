@@ -2,9 +2,12 @@
 
 namespace Yui;
 
+use DI\Container;
 use DI\ContainerBuilder;
+use Exception;
 use Yui\Bootstrap\LoadEnvironmentVariables;
 use Yui\Contracts\Application as ApplicationContract;
+use Yui\Contracts\Bootstrap\BootstrapContract;
 
 /**
  * Class Application
@@ -22,6 +25,7 @@ class Application implements ApplicationContract
      * @var string
      */
     public const VERSION = '0.0.1';
+
     public function version(): string
     {
         return self::VERSION;
@@ -33,6 +37,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $basePath;
+
     public function basePath(): string
     {
         return $this->basePath;
@@ -44,6 +49,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $bootstrapPath;
+
     public function bootstrapPath(): string
     {
         return $this->bootstrapPath;
@@ -55,6 +61,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $configPath;
+
     public function configPath(): string
     {
         return $this->configPath;
@@ -66,6 +73,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $databasePath;
+
     public function databasePath(): string
     {
         return $this->databasePath;
@@ -78,6 +86,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $publicPath;
+
     public function publicPath(): string
     {
         return $this->publicPath;
@@ -89,6 +98,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $resourcePath;
+
     public function resourcePath(): string
     {
         return $this->resourcePath;
@@ -100,6 +110,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $storagePath;
+
     public function storagePath(): string
     {
         return $this->storagePath;
@@ -111,6 +122,7 @@ class Application implements ApplicationContract
      * @var string
      */
     protected string $routesPath;
+
     public function routesPath(): string
     {
         return $this->routesPath;
@@ -119,9 +131,9 @@ class Application implements ApplicationContract
     /**
      * The DI container.
      *
-     * @var \DI\Container
+     * @var Container
      */
-    public \DI\Container $container;
+    public Container $container;
 
     /**
      * The bootstrap classes for the application.
@@ -133,6 +145,9 @@ class Application implements ApplicationContract
     ];
 
 
+    /**
+     * @throws Exception
+     */
     public function buildContainer(): void
     {
         $containerBuilder = new ContainerBuilder();
@@ -147,9 +162,9 @@ class Application implements ApplicationContract
 
     public function with(
         string $basePath,
-    ): self {
+    ): self
+    {
         $this->basePath = $basePath;
-        echo $basePath;
         $this->bootstrapPath = $basePath . '/bootstrap';
         $this->databasePath = $basePath . '/app/Database';
         $this->publicPath = $basePath . '/public';
@@ -160,6 +175,9 @@ class Application implements ApplicationContract
         return $this;
     }
 
+    /**
+     * @throws Exception
+     */
     public function create(): self
     {
         $this->buildContainer();
@@ -170,10 +188,13 @@ class Application implements ApplicationContract
         return $this;
     }
 
+    /**
+     * @throws Exception
+     */
     public static function getInstance(): self
     {
-        if(self::$app === null) {
-            throw new \Exception('Application not created');
+        if (self::$app === null) {
+            throw new Exception('Application not created');
         } else {
             return self::$app;
         }
@@ -182,7 +203,7 @@ class Application implements ApplicationContract
     protected function boot(): void
     {
         foreach ($this->bootstrappers as $bootstrapper) {
-            /** @var \Yui\Contracts\Bootstrap\BootstrapContract $bootstrapper */
+            /** @var BootstrapContract $bootstrapper */
             $bootstrapper = new $bootstrapper();
             $bootstrapper->bootstrap($this);
         }

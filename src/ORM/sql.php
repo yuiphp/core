@@ -6,5 +6,5 @@ namespace Yui\ORM;
 
 function sql(string $sql): string
 {
-	return $sql;
+    return $sql;
 }

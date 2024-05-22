@@ -1,6 +1,7 @@
 # Roadmap for future
 
-Yui was born as a way to keep motivated to study PHP outside of laravel, since 2022 I've been using laravel on a daily basis and I felt stuck with it (not that it's a bad thing).
+Yui was born as a way to keep motivated to study PHP outside of laravel, since 2022 I've been using laravel on a daily
+basis and I felt stuck with it (not that it's a bad thing).
 
 This mini framework made from the heart has helped me understand how Laravel processes work behind the scenes.
 
@@ -25,7 +26,7 @@ This mini framework made from the heart has helped me understand how Laravel pro
 - [ ] Events: Implement an event system (Laravel like).
 - [ ] WebSockets (With FrankenPHP): Implement a WebSocket system.
 
-
 ## Possible features
+
 - [ ] Script "What i need docs" that will check what is missing in the documentation based on the source code.
 - [ ] Script "What i need tests" that will check what is missing in the tests based on the source code.
