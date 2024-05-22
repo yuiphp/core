@@ -7,6 +7,7 @@ namespace Yui\Contracts\ORM\Clauses;
 
 interface ClauseContract
 {
-	public function setValues(string ...$values): void;
-	public function getClause(): string;
+    public function set(array $data): void;
+
+    public function getSql(): string;
 }

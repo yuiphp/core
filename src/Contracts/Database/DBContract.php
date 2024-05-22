@@ -10,7 +10,7 @@ interface DBContract
 {
     /**
      * Run a SQL query using the PDO connection
-     * 
+     *
      * @param string $sql
      * @return int Number of affected rows
      */
@@ -18,7 +18,7 @@ interface DBContract
 
     /**
      * Get a SQL query using the PDO connection
-     * 
+     *
      * @param string $sql
      * @return PDOStatement
      */
