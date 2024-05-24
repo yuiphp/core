@@ -6,5 +6,6 @@ namespace Yui\ORM\Operators;
 
 function eq(string $column, mixed $value): string
 {
-    return "WHERE $column = '$value' ";
+    $value = is_string($value) ? "'$value'" : $value;
+    return "$column = $value ";
 }

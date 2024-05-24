@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yui\ORM\Operators;
 
-function notExists(string $column, string $query): string
+function notExists(string $query): string
 {
-    return "WHERE NOT EXISTS ($query) ";
+    return "NOT EXISTS ($query) ";
 }

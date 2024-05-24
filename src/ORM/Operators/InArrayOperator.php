@@ -6,5 +6,6 @@ namespace Yui\ORM\Operators;
 
 function inArray(string $column, array $values): string
 {
-    return "WHERE $column IN ('" . implode("', '", $values) . "') "; //Where $column in ('value1', 'value2', 'value3')
+    $values = implode(', ', array_map(fn ($value) => is_string($value) ? "'$value'" : $value, $values));
+    return "$column IN ($values) ";
 }

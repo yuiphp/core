@@ -6,5 +6,6 @@ namespace Yui\ORM\Operators;
 
 function like(string $column, mixed $value): string
 {
-    return "WHERE $column LIKE '%$value%' ";
+    $value = is_string($value) ? "'$value'" : $value;
+    return "$column LIKE $value ";
 }

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yui\ORM;
+namespace Yui\ORM\Operators;
 
 function neq(string $column, mixed $value): string
 {
-    return "WHERE $column != '$value' ";
+    $value = is_string($value) ? "'$value'" : $value;
+    return "$column != $value ";
 }

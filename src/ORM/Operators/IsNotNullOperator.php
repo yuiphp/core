@@ -6,6 +6,5 @@ namespace Yui\ORM\Operators;
 
 function isNotNull(string $column): string
 {
-    return "WHERE $column IS NOT NULL ";
+    return "$column IS NOT NULL ";
 }
-
