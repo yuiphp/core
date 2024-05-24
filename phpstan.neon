@@ -11,4 +11,3 @@ parameters:
         - src
     ignoreErrors:
         - '#Interface must be suffixed with "Interface" exclusively#'
-        - '#Instead of protected element, use private element or contract method#'

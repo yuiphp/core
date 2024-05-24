@@ -7,6 +7,7 @@ use Yui\ORM\Builders\Insert\InsertBuilder;
 use Yui\ORM\Builders\Select\SelectBuilder;
 use Yui\ORM\Builders\Update\UpdateBuilder;
 use Yui\ORM\QueryBuilder;
+
 use function Yui\ORM\db;
 
 it('should return a query builder instance', function () {

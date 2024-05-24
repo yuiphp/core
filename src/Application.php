@@ -162,8 +162,7 @@ class Application implements ApplicationContract
 
     public function with(
         string $basePath,
-    ): self
-    {
+    ): self {
         $this->basePath = $basePath;
         $this->bootstrapPath = $basePath . '/bootstrap';
         $this->databasePath = $basePath . '/app/Database';

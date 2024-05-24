@@ -49,11 +49,11 @@ class DatabaseConnection
 
         switch ($driver) {
             case 'mysql':
-                return new MysqlDriver;
+                return new MysqlDriver();
             case 'pgsql':
-                return new PgsqlDriver;
+                return new PgsqlDriver();
             case 'sqlite':
-                return new SqliteDriver;
+                return new SqliteDriver();
             default:
                 throw new Exception('Invalid database driver');
         }

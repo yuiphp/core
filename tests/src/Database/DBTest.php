@@ -25,8 +25,9 @@ it('runs a query successfully', function () {
 });
 
 it('gets a query successfully', function () {
-    $this->pdoMock->shouldReceive('query')->andReturn($this->pdoStatementMock);
-    $this->pdoStatementMock->shouldReceive('setFetchMode')->with(PDO::FETCH_ASSOC);
+    $this->pdoMock->shouldReceive('prepare')->andReturn($this->pdoStatementMock);
+    $this->pdoStatementMock->shouldReceive('setFetchMode')->with(PDO::FETCH_OBJ);
+    $this->pdoStatementMock->shouldReceive('execute');
 
     $db = new DB($this->dbConnectionMock);
     $stmt = $db->getQuery('SELECT * FROM users');
@@ -42,7 +43,7 @@ it('throws an exception when there is an error running a query', function () {
 })->throws(Exception::class, 'Error running query: Error running query');
 
 it('throws an exception when there is an error getting a query', function () {
-    $this->pdoMock->shouldReceive('query')->andThrow(new PDOException('Error running query'));
+    $this->pdoMock->shouldReceive('prepare')->andThrow(new PDOException('Error running query'));
 
     $db = new DB($this->dbConnectionMock);
     $db->getQuery('SELECT * FROM users');
