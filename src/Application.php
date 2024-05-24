@@ -19,6 +19,8 @@ class Application implements ApplicationContract
 {
     public static ?Application $app = null;
 
+    protected bool $testingMode = false;
+
     /**
      * The Yui framework version.
      *
@@ -162,15 +164,16 @@ class Application implements ApplicationContract
 
     public function with(
         string $basePath,
+        bool $testing = false
     ): self {
         $this->basePath = $basePath;
+        $this->testingMode = $testing;
         $this->bootstrapPath = $basePath . '/bootstrap';
         $this->databasePath = $basePath . '/app/Database';
         $this->publicPath = $basePath . '/public';
         $this->resourcePath = $basePath . '/resources';
         $this->storagePath = $basePath . '/storage';
         $this->routesPath = $basePath . '/app/Routes';
-
         return $this;
     }
 
@@ -193,7 +196,7 @@ class Application implements ApplicationContract
     public static function getInstance(): self
     {
         if (self::$app === null) {
-            throw new Exception('Application not created');
+            throw new \RuntimeException('Application not created');
         } else {
             return self::$app;
         }

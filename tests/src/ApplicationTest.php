@@ -2,6 +2,10 @@
 
 use Yui\Application;
 
+afterEach(function () {
+    Mockery::close();
+});
+
 it('configures the application correctly', function () {
     $basePath = '/base/path';
     $bootstrapPath = '/base/path/bootstrap';
@@ -13,12 +17,6 @@ it('configures the application correctly', function () {
 
     $app = Application::configure()->with(
         $basePath,
-        $bootstrapPath,
-        $databasePath,
-        $publicPath,
-        $resourcePath,
-        $storagePath,
-        $routesPath
     );
 
     expect($app->basePath())->toBe($basePath)

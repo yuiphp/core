@@ -11,12 +11,9 @@ beforeEach(function () {
 
 afterEach(function () {
     Mockery::close();
-    $_ENV['DB_CONNECTION'] = null;
 });
 
 it('connects using the mysql driver', function () {
-    $_ENV['DB_CONNECTION'] = 'mysql';
-
     $mockDriver = Mockery::mock(MysqlDriver::class);
     $mockDriver->shouldReceive('connect')->once()->andReturn($this->pdoMock);
 
@@ -27,8 +24,6 @@ it('connects using the mysql driver', function () {
 });
 
 it('connects using the pgsql driver', function () {
-    $_ENV['DB_CONNECTION'] = 'pgsql';
-
     $mockDriver = Mockery::mock(PgsqlDriver::class);
     $mockDriver->shouldReceive('connect')->once()->andReturn($this->pdoMock);
 
@@ -39,8 +34,6 @@ it('connects using the pgsql driver', function () {
 });
 
 it('connects using the sqlite driver', function () {
-    $_ENV['DB_CONNECTION'] = 'sqlite';
-
     $mockDriver = Mockery::mock(SqliteDriver::class);
     $mockDriver->shouldReceive('connect')->once()->andReturn($this->pdoMock);
 
@@ -51,8 +44,6 @@ it('connects using the sqlite driver', function () {
 });
 
 it('throws an exception for an invalid driver', function () {
-    $_ENV['DB_CONNECTION'] = 'invalid';
-
     $dbConnection = new DatabaseConnection();
 
     $dbConnection->connect();

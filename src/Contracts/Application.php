@@ -92,6 +92,7 @@ interface Application
      */
     public function with(
         string $basePath,
+        bool $testing = false,
     ): self;
 
     /**

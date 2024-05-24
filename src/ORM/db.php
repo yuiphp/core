@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Yui\ORM;
 
+use Yui\Application;
+
 function db(): QueryBuilder
 {
-    return new QueryBuilder();
+    $application = Application::getInstance();
+    return new QueryBuilder($application);
 }

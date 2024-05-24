@@ -41,16 +41,32 @@ class DB implements DBContract
     }
 
     /**
+     * Get the PDO connection
+     */
+    public function getDbh(): PDO
+    {
+        return $this->dbh;
+    }
+
+    /**
      * Run a SQL query using the PDO connection
      *
      * @param string $sql
      * @return int Number of affected rows
      * @throws Exception If there is an error running the query
      */
-    public function runQuery(string $sql): int
+    public function runQuery(string $sql, array $params = []): int
     {
         try {
-            return $this->dbh->exec($sql);
+            $stmt = $this->dbh->prepare($sql);
+            if (!$stmt) {
+                throw new RuntimeException("Error preparing query: " . $this->dbh->errorInfo()[2]);
+            }
+            foreach ($params as $param => $value) {
+                $stmt->bindValue(':'.$param, $value);
+            }
+            $stmt->execute();
+            return $stmt->rowCount();
         } catch (PDOException $e) {
             throw new RuntimeException("Error running query: " . $e->getMessage(), 0, $e);
         }

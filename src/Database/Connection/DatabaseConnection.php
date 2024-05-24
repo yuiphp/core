@@ -38,6 +38,7 @@ class DatabaseConnection
      * Get the driver instance.
      *
      * @return DriverContract
+     * @throws Exception
      */
     protected function getDriver(): DriverContract
     {

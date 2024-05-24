@@ -4,36 +4,44 @@ declare(strict_types=1);
 
 namespace Yui\ORM;
 
+use Yui\Application;
+use Yui\Database\DB;
 use Yui\ORM\Builders\Delete\DeleteBuilder;
 use Yui\ORM\Builders\Insert\InsertBuilder;
 use Yui\ORM\Builders\Select\SelectBuilder;
 use Yui\ORM\Builders\Update\UpdateBuilder;
 
+
 class QueryBuilder
 {
-    protected $builder;
+
 
     public function select(string ...$columns): SelectBuilder
     {
-        $this->builder = new SelectBuilder(...$columns);
-        return $this->builder;
+        return new SelectBuilder(...$columns);
     }
 
-    public function insert()
+    public function insert(string $table): InsertBuilder
     {
-        $this->builder = new InsertBuilder('1');
-        return $this->builder;
+        $db = Application::getInstance()->container->get(DB::class);
+        return new InsertBuilder($table, $db);
     }
 
-    public function update()
+    public function update(): UpdateBuilder
     {
-        $this->builder = new UpdateBuilder('1');
-        return $this->builder;
+        $db = Application::getInstance()->container->get(DB::class);
+        return new UpdateBuilder('1', $db);
     }
 
-    public function delete()
+    public function delete(): DeleteBuilder
     {
-        $this->builder = new DeleteBuilder('1');
-        return $this->builder;
+        $db = Application::getInstance()->container->get(DB::class);
+        return new DeleteBuilder('1', $db);
+    }
+
+    public function upsert(): UpsertBuilder
+    {
+        $db = Application::getInstance()->container->get(DB::class);
+        return new UpsertBuilder('1', $db);
     }
 }
