@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yui\Contracts\Bootstrap;
 
-use Yui\Contracts\Application;
+use Yui\Application;
 
 /**
  * Interface BootstrapContract

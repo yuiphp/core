@@ -2,11 +2,11 @@
 
 namespace Yui;
 
-use DI\Container;
 use DI\ContainerBuilder;
-use Exception;
+use RuntimeException;
+use Yui\Bootstrap\ContainerBootstrap;
 use Yui\Bootstrap\LoadEnvironmentVariables;
-use Yui\Contracts\Application as ApplicationContract;
+use DI\Container;
 use Yui\Contracts\Bootstrap\BootstrapContract;
 
 /**
@@ -15,197 +15,46 @@ use Yui\Contracts\Bootstrap\BootstrapContract;
  * @package Yui
  * @author andrefelipe18
  */
-class Application implements ApplicationContract
+class Application
 {
     public static ?Application $app = null;
-
-    protected bool $testingMode = false;
-
-    /**
-     * The Yui framework version.
-     *
-     * @var string
-     */
-    public const VERSION = '0.0.1';
-
-    public function version(): string
-    {
-        return self::VERSION;
-    }
-
-    /**
-     * The base path of the Laravel installation.
-     *
-     * @var string
-     */
-    protected string $basePath;
-
-    public function basePath(): string
-    {
-        return $this->basePath;
-    }
-
-    /**
-     * The path to the bootstrap directory.
-     *
-     * @var string
-     */
-    protected string $bootstrapPath;
-
-    public function bootstrapPath(): string
-    {
-        return $this->bootstrapPath;
-    }
-
-    /**
-     * The path to the application configuration files.
-     *
-     * @var string
-     */
-    protected string $configPath;
-
-    public function configPath(): string
-    {
-        return $this->configPath;
-    }
-
-    /**
-     * The path to the database directory.
-     *
-     * @var string
-     */
-    protected string $databasePath;
-
-    public function databasePath(): string
-    {
-        return $this->databasePath;
-    }
-
-
-    /**
-     * The path to the public directory.
-     *
-     * @var string
-     */
-    protected string $publicPath;
-
-    public function publicPath(): string
-    {
-        return $this->publicPath;
-    }
-
-    /**
-     * The path to the resources directory.
-     *
-     * @var string
-     */
-    protected string $resourcePath;
-
-    public function resourcePath(): string
-    {
-        return $this->resourcePath;
-    }
-
-    /**
-     * The path to the storage directory.
-     *
-     * @var string
-     */
-    protected string $storagePath;
-
-    public function storagePath(): string
-    {
-        return $this->storagePath;
-    }
-
-    /**
-     * The path to the routes directory.
-     *
-     * @var string
-     */
-    protected string $routesPath;
-
-    public function routesPath(): string
-    {
-        return $this->routesPath;
-    }
-
-    /**
-     * The DI container.
-     *
-     * @var Container
-     */
     public Container $container;
 
-    /**
-     * The bootstrap classes for the application.
-     *
-     * @var array<string>
-     */
-    protected array $bootstrappers = [
+    public string $basePath = '';
+
+    private function __construct(){}
+
+    public static function getInstance(): Application
+    {
+        if(!self::$app) {
+            throw new RuntimeException('Application not initialized');
+        }
+
+        return self::$app;
+    }
+
+    public static function configure(string $basePath): Application
+    {
+        self::$app = new self();
+        self::$app->basePath = $basePath;
+
+        return self::$app;
+    }
+
+    public function build(): void
+    {
+        $this->boot();
+    }
+
+    /** * @var BootstrapContract[]  */
+    private array $bootstrappers = [
         LoadEnvironmentVariables::class,
+        ContainerBootstrap::class
     ];
 
-
-    /**
-     * @throws Exception
-     */
-    public function buildContainer(): void
-    {
-        $containerBuilder = new ContainerBuilder();
-        $containerBuilder->addDefinitions(__DIR__ . '/Container/DatabaseDefinitions.php');
-        $this->container = $containerBuilder->build();
-    }
-
-    public static function configure(): self
-    {
-        return new self();
-    }
-
-    public function with(
-        string $basePath,
-        bool $testing = false
-    ): self {
-        $this->basePath = $basePath;
-        $this->testingMode = $testing;
-        $this->bootstrapPath = $basePath . '/bootstrap';
-        $this->databasePath = $basePath . '/app/Database';
-        $this->publicPath = $basePath . '/public';
-        $this->resourcePath = $basePath . '/resources';
-        $this->storagePath = $basePath . '/storage';
-        $this->routesPath = $basePath . '/app/Routes';
-        return $this;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function create(): self
-    {
-        $this->buildContainer();
-        $this->boot();
-
-        self::$app = $this;
-
-        return $this;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public static function getInstance(): self
-    {
-        if (self::$app === null) {
-            throw new \RuntimeException('Application not created');
-        } else {
-            return self::$app;
-        }
-    }
-
-    protected function boot(): void
+    private function boot(): void
     {
         foreach ($this->bootstrappers as $bootstrapper) {
-            /** @var BootstrapContract $bootstrapper */
             $bootstrapper = new $bootstrapper();
             $bootstrapper->bootstrap($this);
         }

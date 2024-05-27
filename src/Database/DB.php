@@ -22,14 +22,14 @@ class DB implements DBContract
     private ?PDO $dbh = null;
 
     /**
-     * @param DatabaseConnection $dbConn
+     * @param DatabaseConnection $databaseConnection
      *
      * @throws Exception
      */
-    public function __construct(DatabaseConnection $dbConn)
+    public function __construct(DatabaseConnection $databaseConnection)
     {
         try {
-            $this->dbh = $dbConn->connect(); // Connecting to the database
+            $this->dbh = $databaseConnection->connect(); // Connecting to the database
         } catch (PDOException $e) {
             throw new RuntimeException("Error connecting to the database: " . $e->getMessage(), 0, $e);
         }
@@ -52,8 +52,8 @@ class DB implements DBContract
      * Run a SQL query using the PDO connection
      *
      * @param string $sql
+     * @param array $params
      * @return int Number of affected rows
-     * @throws Exception If there is an error running the query
      */
     public function runQuery(string $sql, array $params = []): int
     {
@@ -76,8 +76,8 @@ class DB implements DBContract
      * Get a PDOStatement object for a query
      *
      * @param string $sql
+     * @param array $params
      * @return PDOStatement
-     * @throws Exception If there is an error running the query
      */
     public function getQuery(string $sql, array $params = []): PDOStatement
     {

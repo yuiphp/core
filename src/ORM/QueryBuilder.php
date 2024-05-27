@@ -11,11 +11,8 @@ use Yui\ORM\Builders\Insert\InsertBuilder;
 use Yui\ORM\Builders\Select\SelectBuilder;
 use Yui\ORM\Builders\Update\UpdateBuilder;
 
-
 class QueryBuilder
 {
-
-
     public function select(string ...$columns): SelectBuilder
     {
         return new SelectBuilder(...$columns);
