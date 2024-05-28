@@ -21,6 +21,7 @@ class DatabaseConnection
 {
     public function __construct(protected DriverContract $driver)
     {
+        $this->validateDriver($driver);
     }
 
     /**
@@ -31,5 +32,15 @@ class DatabaseConnection
     public function connect(): PDO
     {
         return $this->driver->connect();
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function validateDriver(DriverContract $driver): void
+    {
+        if (!($driver instanceof MysqlDriver) && !($driver instanceof PgsqlDriver) && !($driver instanceof SqliteDriver)) {
+            throw new Exception('Invalid database driver');
+        }
     }
 }

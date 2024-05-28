@@ -19,13 +19,20 @@ class LoadEnvironmentVariables implements BootstrapContract
     /**
      * Create a new EnvironmentVariables instance.
      *
-     * @param \Yui\Contracts\Application $app
+     * @param Application $app
      *
      * @return void
      */
     public function bootstrap(Application $app): void
     {
+        echo 'Loading environment variables...';
+        throw new \Exception('Not implemented yet!');
         $dotenv = Dotenv::createImmutable($app->basePath());
         $dotenv->load();
+    }
+
+    public function __construct()
+    {
+        echo "ASIDAUIHUASUHDHUASD";
     }
 }

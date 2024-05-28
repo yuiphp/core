@@ -10,81 +10,50 @@ use PDOException;
 use PDOStatement;
 use Yui\Contracts\Database\DBContract;
 use Yui\Database\Connection\DatabaseConnection;
-use RuntimeException;
+use Yui\Exceptions\DatabaseException;
 
 class DB implements DBContract
 {
-    /**
-     * Database handler
-     *
-     * @var PDO|null
-     */
-    private ?PDO $dbh = null;
+    private ?PDO $pdoConnection = null;
 
-    /**
-     * @param DatabaseConnection $databaseConnection
-     *
-     * @throws Exception
-     */
     public function __construct(DatabaseConnection $databaseConnection)
     {
         try {
-            $this->dbh = $databaseConnection->connect(); // Connecting to the database
+            $this->pdoConnection = $databaseConnection->connect();
         } catch (PDOException $e) {
-            throw new RuntimeException("Error connecting to the database: " . $e->getMessage(), 0, $e);
+            throw new DatabaseException("Error connecting to the database: " . $e->getMessage(), 0, $e);
         }
     }
 
     public function __destruct()
     {
-        $this->dbh = null; // Setting the handler to NULL closes the connection properly
+        $this->pdoConnection = null;
     }
 
-    /**
-     * Get the PDO connection
-     */
-    public function getDbh(): PDO
+    public function getPdoConnection(): PDO
     {
-        return $this->dbh;
+        return $this->pdoConnection;
     }
 
-    /**
-     * Run a SQL query using the PDO connection
-     *
-     * @param string $sql
-     * @param array $params
-     * @return int Number of affected rows
-     */
     public function runQuery(string $sql, array $params = []): int
     {
-        try {
-            $stmt = $this->dbh->prepare($sql);
-            if (!$stmt) {
-                throw new RuntimeException("Error preparing query: " . $this->dbh->errorInfo()[2]);
-            }
-            foreach ($params as $param => $value) {
-                $stmt->bindValue(':'.$param, $value);
-            }
-            $stmt->execute();
-            return $stmt->rowCount();
-        } catch (PDOException $e) {
-            throw new RuntimeException("Error running query: " . $e->getMessage(), 0, $e);
-        }
+        return $this->prepareAndExecute($sql, $params)->rowCount();
+    }
+
+    public function getQuery(string $sql, array $params = []): PDOStatement
+    {
+        return $this->prepareAndExecute($sql, $params);
     }
 
     /**
-     * Get a PDOStatement object for a query
-     *
-     * @param string $sql
-     * @param array $params
-     * @return PDOStatement
+     * @throws DatabaseException
      */
-    public function getQuery(string $sql, array $params = []): PDOStatement
+    private function prepareAndExecute(string $sql, array $params = []): PDOStatement
     {
         try {
-            $stmt = $this->dbh->prepare($sql);
+            $stmt = $this->pdoConnection->prepare($sql);
             if (!$stmt) {
-                throw new RuntimeException("Error preparing query: " . $this->dbh->errorInfo()[2]);
+                throw new DatabaseException("Error preparing query: " . $this->pdoConnection->errorInfo()[2]);
             }
             foreach ($params as $param => $value) {
                 $stmt->bindValue(':'.$param, $value);
@@ -93,7 +62,7 @@ class DB implements DBContract
             $stmt->execute();
             return $stmt;
         } catch (PDOException $e) {
-            throw new RuntimeException("Error running query: " . $e->getMessage(), 0, $e);
+            throw new DatabaseException("Error running query: " . $e->getMessage(), 0, $e);
         }
     }
 }

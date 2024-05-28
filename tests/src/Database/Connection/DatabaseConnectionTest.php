@@ -15,36 +15,41 @@ afterEach(function () {
 
 it('connects using the mysql driver', function () {
     $mockDriver = Mockery::mock(MysqlDriver::class);
-    $mockDriver->shouldReceive('connect')->once()->andReturn($this->pdoMock);
+    $mockDriver->expects('connect')->andReturns($this->pdoMock);
 
-    $dbConnection = new DatabaseConnection();
-    $dbConnection->setDriver($mockDriver);
+    $dbConnection = new DatabaseConnection($mockDriver);
 
     expect($dbConnection->connect())->toBe($this->pdoMock);
 });
 
 it('connects using the pgsql driver', function () {
     $mockDriver = Mockery::mock(PgsqlDriver::class);
-    $mockDriver->shouldReceive('connect')->once()->andReturn($this->pdoMock);
+    $mockDriver->expects('connect')->andReturns($this->pdoMock);
 
-    $dbConnection = new DatabaseConnection();
-    $dbConnection->setDriver($mockDriver);
+    $dbConnection = new DatabaseConnection($mockDriver);
 
     expect($dbConnection->connect())->toBe($this->pdoMock);
 });
 
 it('connects using the sqlite driver', function () {
     $mockDriver = Mockery::mock(SqliteDriver::class);
-    $mockDriver->shouldReceive('connect')->once()->andReturn($this->pdoMock);
+    $mockDriver->expects('connect')->andReturns($this->pdoMock);
 
-    $dbConnection = new DatabaseConnection();
-    $dbConnection->setDriver($mockDriver);
+    $dbConnection = new DatabaseConnection($mockDriver);
 
     expect($dbConnection->connect())->toBe($this->pdoMock);
 });
 
 it('throws an exception for an invalid driver', function () {
-    $dbConnection = new DatabaseConnection();
-
+    $dbConnection = new DatabaseConnection(new InvalidDriver());
+    
     $dbConnection->connect();
 })->throws(Exception::class, 'Invalid database driver');
+
+class InvalidDriver implements \Yui\Contracts\Database\Driver\DriverContract
+{
+    public function connect(): PDO
+    {
+        return new PDO('sqlite::memory:');
+    }
+}
