@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yui\Database;
 
-use Exception;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -16,23 +15,9 @@ class DB implements DBContract
 {
     private ?PDO $pdoConnection = null;
 
-    public function __construct(DatabaseConnection $databaseConnection)
+    public function __construct(DatabaseConnection $pdoConnection)
     {
-        try {
-            $this->pdoConnection = $databaseConnection->connect();
-        } catch (PDOException $e) {
-            throw new DatabaseException("Error connecting to the database: " . $e->getMessage(), 0, $e);
-        }
-    }
-
-    public function __destruct()
-    {
-        $this->pdoConnection = null;
-    }
-
-    public function getPdoConnection(): PDO
-    {
-        return $this->pdoConnection;
+        $this->pdoConnection = $pdoConnection::connect();
     }
 
     public function runQuery(string $sql, array $params = []): int
@@ -66,3 +51,9 @@ class DB implements DBContract
         }
     }
 }
+
+/**
+ * Essa classe eu quero pegar ela vindo do container
+ *
+ * ou seja $db = $container->get(DB::class);
+ */

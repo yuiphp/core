@@ -19,7 +19,6 @@ afterEach(function () {
 });
 
 it('should return a query builder instance', function () {
-    var_dump($_ENV);
     $this->assertInstanceOf(QueryBuilder::class, db());
 });
 

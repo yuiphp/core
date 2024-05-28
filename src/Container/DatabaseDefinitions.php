@@ -24,8 +24,5 @@ return [
             default => throw new \RuntimeException('Driver not found'),
         };
     }),
-    DatabaseConnection::class => create(DatabaseConnection::class),
-    DB::class => factory(function(){
-        return DB::getInstance();
-    }),
+    DB::class => create(DB::class)->constructor(create(DatabaseConnection::class)),
 ];

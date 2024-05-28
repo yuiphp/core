@@ -19,7 +19,8 @@ it('runs a query successfully', function () {
     $mockStmt = Mockery::mock(PDOStatement::class);
     $this->pdoMock->allows('prepare')->andReturn($mockStmt);
     $mockStmt->allows('execute')->andReturn(true);
-    $mockStmt->allows('rowCount')->andReturn(1); // Define behavior for rowCount
+    $mockStmt->allows('rowCount')->andReturn(1);
+    $mockStmt->allows('setFetchMode')->with(PDO::FETCH_OBJ);
     $this->pdoMock->allows('exec')->andReturn(1);
 
     $db = new DB($this->dbConnectionMock);
@@ -43,6 +44,7 @@ it('throws an exception when there is an error running a query', function () {
     $mockStmt = Mockery::mock(PDOStatement::class);
     $this->pdoMock->allows('prepare')->andReturn($mockStmt);
     $mockStmt->allows('execute')->andThrow(new PDOException('Error running query'));
+    $mockStmt->allows('setFetchMode')->with(PDO::FETCH_OBJ);
     $this->pdoMock->allows('exec')->andThrow(new PDOException('Error running query'));
 
     $db = new DB($this->dbConnectionMock);

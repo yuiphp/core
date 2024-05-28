@@ -2,69 +2,62 @@
 
 declare(strict_types=1);
 
+use Yui\ORM\Builders\Select\SelectBuilder;
 use function Yui\ORM\db;
 use function Yui\ORM\Operators\eq;
 use function Yui\ORM\Operators\neq;
 
 it('should return a query containing the columns passed in the select()', function () {
-    $query = db()->select('name', 'email')->getSqlWithBindings();
+    $builder = new SelectBuilder('name', 'email');
+    $query = $builder->getSqlWithBindings();
     $this->assertEquals('SELECT name, email FROM ', $query);
 });
 
 it('should return a query containing all columns when no columns are passed in the select()', function () {
-    $query = db()->select()->getSqlWithBindings();
+    $builder = new SelectBuilder();
+    $query = $builder->getSqlWithBindings();
     $this->assertEquals('SELECT * FROM ', $query);
 });
 
 it('should return a query containing the columns passed in the select() and reset the columns', function () {
-    $query = db()->select('name', 'email')->getSqlWithBindings();
+    $builder = new SelectBuilder('name', 'email');
+    $query = $builder->getSqlWithBindings();
     $this->assertEquals('SELECT name, email FROM ', $query);
 
-    $query = db()->select()->getSqlWithBindings();
+    $otherBuilder = new SelectBuilder();
+    $query = $otherBuilder->getSqlWithBindings();
     $this->assertEquals('SELECT * FROM ', $query);
 });
 
 it('should return a query containing the table name', function () {
-    $query = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->getSqlWithBindings();
+    $builder = new SelectBuilder('name', 'email');
+    $query = $builder->from('users')->getSqlWithBindings();
 
     $this->assertEquals('SELECT name, email FROM users', $query);
 });
 
 it('should return a query containing the where condition', function () {
     $id = 1;
-    $query = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where("id = $id")
-        ->getSqlWithBindings();
+
+    $builder = new SelectBuilder('name', 'email');
+    $query = $builder->from('users')->where("id = $id")->getSqlWithBindings();
 
     $this->assertEquals('SELECT name, email FROM users WHERE id = 1', $query);
 });
 
 it('should return a query containing the where condition as a callable', function () {
     $id = 1;
-    $query = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where(neq("id", $id))
-        ->getSqlWithBindings();
-
     $id2 = 2;
-    $query2 = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where(fn () => "id = $id2")
-        ->getSqlWithBindings();
-
     $id3 = 3;
-    $query3 = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where(eq('id', $id3))
-        ->getSqlWithBindings();
+
+    $builder1 = new SelectBuilder('name', 'email');
+    $query = $builder1->from('users')->where(neq("id", $id))->getSqlWithBindings();
+
+    $builder2 = new SelectBuilder('name', 'email');
+    $query2 = $builder2->from('users')->where(fn () => "id = $id2")->getSqlWithBindings();
+
+    $builder3 = new SelectBuilder('name', 'email');
+    $query3 = $builder3->from('users')->where(eq('id', $id3))->getSqlWithBindings();
 
     $this->assertEquals('SELECT name, email FROM users WHERE id != 1 ', $query);
     $this->assertEquals('SELECT name, email FROM users WHERE id = 2', $query2);
@@ -73,37 +66,24 @@ it('should return a query containing the where condition as a callable', functio
 
 it('should return a query containing the and where condition', function () {
     $id = 1;
-    $name = 'John';
-    $query = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where("id = $id")
-        ->andWhere("name = $name")
-        ->getSqlWithBindings();
 
-    $this->assertEquals('SELECT name, email FROM users WHERE id = 1 AND name = John', $query);
+    $builder = new SelectBuilder('name', 'email');
+    $query = $builder->from('users')->where("id = $id")->andWhere("name = 'John'")->getSqlWithBindings();
+
+    $this->assertEquals("SELECT name, email FROM users WHERE id = 1 AND name = 'John'", $query);
 });
 
 it('should removes the words Where, Or, And when passed redundantly', function () {
     $id = 1;
     $name = 'John';
-    $query = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where("WHERE id = $id")
-        ->andWhere("AND name = $name")
-        ->getSqlWithBindings();
 
-    $id2 = 2;
-    $name2 = 'Doe';
-    $query2 = db()
-        ->select('name', 'email')
-        ->from('users')
-        ->where("WHERE id = $id2")
-        ->andWhere(eq('name', $name2))
-        ->getSqlWithBindings();
+    $builder = new SelectBuilder('name', 'email');
+    $query = $builder->from('users')->where("WHERE id = $id")->andWhere("AND name = $name")->getSqlWithBindings();
 
-    $this->assertEquals('SELECT name, email FROM users WHERE id = 1 AND name = John', $query);
+    $builder2 = new SelectBuilder('name', 'email');
+    $query2 = $builder2->from('users')->where("WHERE id = $id")->andWhere(eq('name', $name))->getSqlWithBindings();
+
+    $this->assertEquals("SELECT name, email FROM users WHERE id = 1 AND name = 'John'", $query);
     $this->assertEquals("SELECT name, email FROM users WHERE id = 2 AND name = 'Doe' ", $query2);
 });
 
@@ -111,11 +91,8 @@ it('should throw an exception when calling andWhere() before where()', function 
     $this->expectException(Exception::class);
     $this->expectExceptionMessage('You must call where() before calling andWhere()');
 
-    db()
-        ->select('name', 'email')
-        ->from('users')
-        ->andWhere("WHERE name = 'John'")
-        ->getSqlWithBindings();
+    $builder = new SelectBuilder('name', 'email');
+    $builder->from('users')->andWhere("WHERE name = 'John'")->getSqlWithBindings();
 });
 
 it('should return a query containing the or where condition', function () {
