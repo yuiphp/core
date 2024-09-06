@@ -74,16 +74,18 @@ it('should return a query containing the and where condition', function () {
 });
 
 it('should removes the words Where, Or, And when passed redundantly', function () {
-    $id = 1;
+    $id = 1001;
     $name = 'John';
 
     $builder = new SelectBuilder('name', 'email');
+    echo "AQUI: \n";
     $query = $builder->from('users')->where("WHERE id = $id")->andWhere("AND name = $name")->getSqlWithBindings();
 
     $builder2 = new SelectBuilder('name', 'email');
+    echo "AQUI 2: \n";
     $query2 = $builder2->from('users')->where("WHERE id = $id")->andWhere(eq('name', $name))->getSqlWithBindings();
 
-    $this->assertEquals("SELECT name, email FROM users WHERE id = 1 AND name = 'John'", $query);
+    $this->assertEquals("SELECT name, email FROM users WHERE id = 1001 AND name = 'John'", $query);
     $this->assertEquals("SELECT name, email FROM users WHERE id = 2 AND name = 'Doe' ", $query2);
 });
 

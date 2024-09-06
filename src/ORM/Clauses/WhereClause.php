@@ -55,6 +55,9 @@ class WhereClause implements WhereClauseContract
 
     public function getBindings(): array
     {
+        echo PHP_EOL;
+        var_dump($this->bindings);
+        echo PHP_EOL;
         return $this->bindings;
     }
 

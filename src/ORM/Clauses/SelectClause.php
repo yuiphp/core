@@ -19,7 +19,6 @@ class SelectClause implements SelectClauseContract
 
     public function set(array $data): void
     {
-        var_dump($data);
         $this->columns = array_map(function ($column, $index) {
             $this->bindings["column$index"] = $column;
             return ":column$index";
